@@ -1,0 +1,288 @@
+<!DOCTYPE html>
+<html lang="hy">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#f7f1e6">
+<title>Ռաֆո  &  Անուշ— Հարսանեկան հրավիրատոմս</title>
+<style>
+:root{--ivory:#fbf7ef;--paper:#fffdf8;--gold:#b49354;--gold-dark:#8e6c32;--ink:#514538;--muted:#897b68;--line:#e6d8bd;--bordeaux:#800020}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:var(--ivory);color:var(--ink);font-family:Georgia,"Noto Serif Armenian",serif;line-height:1.65}
+.wrap{width:min(100% - 28px,760px);margin:auto}
+.hero{min-height:100svh;display:grid;place-items:center;padding:28px 0;overflow:hidden;position:relative;background:radial-gradient(ellipse at top,#fffdf8 0%,#f7f0e3 65%,#efe3ce 100%)}
+
+.bordeaux-heart{position:absolute;color:var(--bordeaux);font-size:22px;opacity:0.75;animation:floatBordeaux 5s infinite ease-in-out}
+.bh-1{top:15%;left:22%;animation-delay:0s}
+.bh-2{top:20%;right:24%;animation-delay:1.5s;font-size:18px}
+.bh-3{bottom:22%;left:26%;animation-delay:3s;font-size:24px}
+.bh-4{bottom:18%;right:22%;animation-delay:4.5s;font-size:20px}
+
+@keyframes floatBordeaux{
+  0%{transform:translateY(0) scale(0.9);opacity:0.4}
+  50%{transform:translateY(-12px) scale(1.1);opacity:0.9}
+  100%{transform:translateY(0) scale(0.9);opacity:0.4}
+}
+
+.envelope-stage{width:min(100%,470px);text-align:center;perspective:1000px;position:relative;z-index:2}
+.intro{letter-spacing:.22em;text-transform:uppercase;color:var(--gold-dark);font-size:.72rem;margin:0 0 18px}
+.envelope{height:275px;width:100%;position:relative;margin:0 auto 24px;cursor:pointer;filter:drop-shadow(0 16px 18px #9d815333);outline:none}
+.env-back{position:absolute;inset:20px 0 0;background:#e7d5b2;border:1px solid #d1b982;border-radius:7px}
+.letter{position:absolute;left:8%;right:8%;bottom:25px;height:205px;background:var(--paper);border:1px solid var(--line);display:flex;flex-direction:column;justify-content:center;align-items:center;transition:transform 1s cubic-bezier(.2,.75,.2,1),bottom 1s;z-index:1}
+.letter .tiny{font-size:.7rem;letter-spacing:.2em;color:var(--gold-dark)}
+.letter .names{font-size:clamp(1.7rem,7vw,2.5rem);color:var(--gold-dark);line-height:1.3;margin:7px 0}
+.env-front{position:absolute;inset:20px 0 0;z-index:3;background:linear-gradient(145deg,#f0e2c7,#e2cca1);clip-path:polygon(0 0,50% 56%,100% 0,100% 100%,0 100%);border-radius:5px}
+.env-flap{position:absolute;z-index:4;top:20px;left:0;width:100%;height:57%;background:linear-gradient(145deg,#f7ebd4,#d9bf8b);clip-path:polygon(0 0,100% 0,50% 100%);transform-origin:top;transition:transform .8s ease;backface-visibility:hidden}
+/* Ոսկեգույն կնիք */
+.seal{position:absolute;z-index:5;left:50%;top:48%;transform:translate(-50%,-50%);width:48px;height:48px;border-radius:50%;background:radial-gradient(circle at 30% 25%,#e3c989,#a27b39);display:grid;place-items:center;color:#fff9e9;font-size:21px;box-shadow:0 2px 5px #74501f44;transition:opacity .3s}
+.envelope.open .env-flap{transform:rotateX(180deg);z-index:0}
+.envelope.open .letter{transform:translateY(-120px);bottom:25px}
+.envelope.open .seal{opacity:0}
+.tap{color:var(--muted);font-size:.9rem;margin:0}
+.opened-note{display:none;color:var(--gold-dark);font-size:.9rem;margin-top:12px}
+.envelope.open+.tap+.opened-note{display:block}
+.section{padding:62px 0;text-align:center}
+.kicker{color:var(--gold-dark);letter-spacing:.2em;text-transform:uppercase;font-size:.7rem}
+h1,h2,h3,p{margin-top:0}
+h1{font-size:clamp(2rem,8vw,3.7rem);font-weight:400;line-height:1.2;color:var(--gold-dark);margin:12px 0}
+h2{font-size:clamp(1.65rem,6vw,2.3rem);font-weight:400;color:var(--gold-dark);margin:8px 0 18px}
+h3{font-weight:400;color:var(--gold-dark);font-size:1.4rem;margin-bottom:6px}
+.ornament{color:var(--gold);font-size:1.4rem;letter-spacing:.35em;margin:18px 0}
+
+.couple-photo-container{max-width:420px;margin:30px auto;border-radius:12px;overflow:hidden;border:1px solid var(--line);box-shadow:0 10px 30px #8f754515}
+.couple-photo-container img{width:100%;height:auto;display:block}
+
+/* Հետհաշվարկի (Timer) ոճերը */
+.countdown-container{margin:35px auto 15px;max-width:460px}
+.countdown-title{font-size:0.85rem;color:var(--gold-dark);letter-spacing:0.15em;text-transform:uppercase;margin-bottom:12px}
+.timer-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:10px}
+.timer-block{background:var(--paper);border:1px solid var(--line);border-radius:10px;padding:12px 6px;box-shadow:0 4px 12px #8f75450a}
+.timer-val{font-size:1.6rem;color:var(--gold-dark);font-weight:bold;line-height:1}
+.timer-lbl{font-size:0.75rem;color:var(--muted);margin-top:4px;text-transform:lowercase}
+
+/* Օրացույցի (Calendar) ոճերը */
+.calendar-card{background:var(--paper);border:1px solid var(--line);border-radius:16px;padding:24px;margin:25px auto 35px;max-width:380px;box-shadow:0 8px 24px #8f75450e}
+.cal-month{font-size:1.2rem;color:var(--gold-dark);letter-spacing:0.1em;text-transform:uppercase;margin-bottom:16px;font-weight:bold}
+.cal-grid{display:grid;grid-template-columns:repeat(7,1fr);gap:8px;text-align:center;font-size:0.9rem}
+.cal-head{color:var(--gold-dark);font-weight:bold;font-size:0.8rem;padding-bottom:6px}
+.cal-day{padding:6px 0;color:var(--ink);border-radius:50%;position:relative;display:grid;place-items:center;min-height:36px}
+.cal-day.wedding-day{background:var(--bordeaux);color:#fff;font-weight:bold;box-shadow:0 3px 8px #80002044}
+.cal-day.wedding-day::after{content:"❤️";position:absolute;top:-8px;right:-6px;font-size:12px}
+
+.locations{display:grid;grid-template-columns:1fr;gap:16px;text-align:left;margin-top:28px}
+.place{background:var(--paper);border:1px solid var(--line);border-radius:14px;padding:22px;box-shadow:0 7px 24px #8f75450b}
+.place-top{display:flex;gap:14px;align-items:flex-start}
+.place-icon{width:45px;height:45px;border-radius:50%;background:#f2e7d2;color:var(--gold-dark);display:grid;place-items:center;font-size:1.25rem;flex-shrink:0}
+.place p{color:var(--muted);margin:4px 0 12px;font-size:.93rem}
+.place h3{margin:0}
+.map-link{display:inline-flex;align-items:center;gap:7px;border:1px solid var(--gold);border-radius:30px;padding:8px 14px;color:var(--gold-dark);text-decoration:none;font-size:.87rem;transition:background .2s}
+.map-link:hover{background:#f6ecd8}
+.time{display:inline-block;margin-top:8px;color:var(--gold-dark);font-size:.9rem}
+.footer{background:#efe3ce;padding:44px 0;text-align:center}
+.footer .names{font-size:2rem;color:var(--gold-dark)}
+@media(min-width:600px){.locations{grid-template-columns:1fr 1fr}.place:last-child{grid-column:1/-1}}
+@media(prefers-reduced-motion:reduce){*,*:before,*:after{animation:none!important;scroll-behavior:auto!important;transition:none!important}}
+</style>
+</head>
+<body>
+
+<audio id="bgMusic" loop preload="auto">
+  <source src="music.mp3" type="audio/mp3">
+</audio>
+
+<header class="hero" id="top">
+  <span class="bordeaux-heart bh-1">❤️</span>
+  <span class="bordeaux-heart bh-2">❤️</span>
+  <span class="bordeaux-heart bh-3">❤️</span>
+  <span class="bordeaux-heart bh-4">❤️</span>
+
+
+  <div class="wrap envelope-stage">
+    <p class="intro">Սիրով հրավիրում ենք Ձեզ</p>
+    <div class="envelope" id="envelope" role="button" tabindex="0" aria-label="Բացել հրավիրատոմսը">
+      <div class="env-back"></div>
+      <div class="letter"><span class="tiny">ՄԵՐ ՀԱՐՍԱՆԻՔԸ</span><div class="names" id="envelopeNames">Ռաֆո  &  Անուշ</div><span class="tiny">31 · 10 · 2026</span></div>
+      <div class="env-front"></div><div class="env-flap"></div><div class="seal">♡</div>
+    </div>
+    <p class="tap" id="tapText">Սեղմեք ծրարի վրա՝ հրավերը բացելու համար</p>
+    <p class="opened-note">Սիրով սպասում ենք Ձեզ ❤️</p>
+  </div>
+</header>
+
+<main id="invitation">
+  <section class="section">
+    <div class="wrap">
+      <div class="kicker">Մեր կյանքի գեղեցիկ օրը</div>
+      <h1 id="mainNames">Ռաֆո  &  Անուշ</h1>
+      <div class="ornament">✧ ❤️ ✧</div>
+      <p class="message">Մեր սիրո պատմությունը նոր էջ է բացում։ Ուրախ կլինենք այս կարևոր ու գեղեցիկ օրը կիսել Ձեզ հետ։ Սիրով սպասում ենք Ձեր ներկայությանը։</p>
+      
+      <div class="couple-photo-container">
+        <img src="nkar1.JPG" alt="Անուշ և Ռաֆո">
+      </div>
+
+      <!-- Հետհաշվարկ (Countdown Timer) -->
+      <div class="countdown-container">
+        <div class="countdown-title">Մինչև մեր տոնը մնացել է</div>
+        <div class="timer-grid">
+          <div class="timer-block"><div class="timer-val" id="cdDays">00</div><div class="timer-lbl">օր</div></div>
+          <div class="timer-block"><div class="timer-val" id="cdHours">00</div><div class="timer-lbl">ժամ</div></div>
+          <div class="timer-block"><div class="timer-val" id="cdMins">00</div><div class="timer-lbl">րոպե</div></div>
+          <div class="timer-block"><div class="timer-val" id="cdSecs">00</div><div class="timer-lbl">վրկ</div></div>
+        </div>
+      </div>
+
+      <!-- Օրացույց (Calendar) -->
+      <div class="calendar-card">
+        <div class="cal-month">Հոկտեմբեր 2026</div>
+        <div class="cal-grid">
+          <div class="cal-head">ԵՐԿ</div>
+          <div class="cal-head">ԵՐՔ</div>
+          <div class="cal-head">ՉՈՐ</div>
+          <div class="cal-head">ՀՆԳ</div>
+          <div class="cal-head">ՈՒՐԲ</div>
+          <div class="cal-head">ՇԲԹ</div>
+          <div class="cal-head">ԿԻՐ</div>
+
+          <div></div><div></div><div></div>
+          
+          <div class="cal-day">1</div>
+          <div class="cal-day">2</div>
+          <div class="cal-day">3</div>
+          <div class="cal-day">4</div>
+          <div class="cal-day">5</div>
+          <div class="cal-day">6</div>
+          <div class="cal-day">7</div>
+          <div class="cal-day">8</div>
+          <div class="cal-day">9</div>
+          <div class="cal-day">10</div>
+          <div class="cal-day">11</div>
+          <div class="cal-day">12</div>
+          <div class="cal-day">13</div>
+          <div class="cal-day">14</div>
+          <div class="cal-day">15</div>
+          <div class="cal-day">16</div>
+          <div class="cal-day">17</div>
+          <div class="cal-day">18</div>
+          <div class="cal-day">19</div>
+          <div class="cal-day">20</div>
+          <div class="cal-day">21</div>
+          <div class="cal-day">22</div>
+          <div class="cal-day">23</div>
+          <div class="cal-day">24</div>
+          <div class="cal-day">25</div>
+          <div class="cal-day">26</div>
+          <div class="cal-day">27</div>
+          <div class="cal-day">28</div>
+          <div class="cal-day">29</div>
+          <div class="cal-day">30</div>
+          
+          <div class="cal-day wedding-day">31</div>
+        </div>
+      </div>
+
+      <p class="kicker">Օրվա վայրերն ու ժամերը</p>
+      <h2>Սիրով սպասում ենք Ձեզ</h2>
+      <div class="locations">
+        <article class="place">
+          <div class="place-top"><div class="place-icon">🏠</div><div><h3>Փեսայի տուն</h3><p>ք. Նոյեմբերյան, Նոյեմբերի փողոց 29, շենք 7, բնակարան 8</p><span class="time">Ժամը՝ 11:00</span></div></div>
+          <p style="margin-top:14px">Հարսանեկան օրվա ջերմ ու ուրախ սկիզբը։</p>
+          <a class="map-link" href="https://maps.app.goo.gl/Duw4QPWWDPiHV8Wd8" target="_blank" rel="noopener">⌖ Բացել քարտեզը ↗</a>
+        </article>
+        <article class="place">
+          <div class="place-top"><div class="place-icon">🏠</div><div><h3>Հարսի տուն</h3><p>գյուղ Բերդավան, 28 փողոց, տուն 16</p><span class="time">Ժամը՝ 12:00</span></div></div>
+          <p style="margin-top:14px">Հարսանեկան օրվա ջերմ ու ուրախ սկիզբը։</p>
+          <a class="map-link" href="https://maps.app.goo.gl/nxHwENwgiLdzaGaj6" target="_blank" rel="noopener">⌖ Բացել քարտեզը ↗</a>
+        </article>
+        <article class="place">
+          <div class="place-top"><div class="place-icon">⛪</div><div><h3>Պսակադրություն</h3><p>Կողբի Սուրբ Հովհաննես եկեղեցի</p><span class="time">Ժամը՝ 13:30</span></div></div>
+          <p style="margin-top:14px">Միացե՛ք մեզ մեր համատեղ կյանքի օրհնության պահին։</p>
+          <a class="map-link" href="https://www.google.com/maps/search/?api=1&query=%D4%BF%D5%B8%D5%B2%D5%B2%D5%AB%20%D5%8D%D5%B8%D6%82%D6%80%D5%A2%20%D5%80%D5%B8%D5%BE%D5%B0%D5%A1%D5%B6%D5%B6%D5%A5%D5%BD%20%D5%A5%D5%AF%D5%A5%D5%B2%D5%A5%D6%81%D5%AB&z=18" target="_blank" rel="noopener">⌖ Բացել քարտեզը ↗</a>
+        </article>
+        <article class="place">
+          <div class="place-top"><div class="place-icon">💍</div><div><h3>Զագսի արարողություն</h3><p>գյուղ Աճարկուտ, 1 փողոց, 13/1 շենք</p><span class="time">Ժամը՝ 17:00</span></div></div>
+          <p style="margin-top:14px">Քաղաքացիական ամուսնության պաշտոնական արարողություն։</p>
+          <a class="map-link" href="https://maps.app.goo.gl/aEgUigYTRwX3XdBy5" target="_blank" rel="noopener">⌖ Բացել քարտեզը ↗</a>
+        </article>
+        <article class="place">
+          <div class="place-top"><div class="place-icon">🥂</div><div><h3>Հարսանյաց հանդիսություն</h3><p>Նույն ռեստորանը՝ գյուղ Աճարկուտում</p><span class="time">Ժամը՝ 17:30</span></div></div>
+          <p style="margin-top:14px">Եկե՛ք միասին տոնելու մեր երջանկությունն ու նոր սկիզբը։</p>
+          <a class="map-link" href="https://maps.app.goo.gl/aEgUigYTRwX3XdBy5" target="_blank" rel="noopener">⌖ Բացել քարտեզը ↗</a>
+        </article>
+      </div>
+      <div class="ornament">💍</div>
+      <p class="message">Ձեր ներկայությունը մեզ համար ամենաթանկ նվերն է։</p>
+    </div>
+  </section>
+</main>
+
+<footer class="footer">
+  <div class="wrap">
+    <div class="ornament">✧</div>
+    <div class="names">Անուշ & Ռաֆո</div>
+    <p>Սիրով՝ Անուշն ու Ռաֆոն</p>
+    <a href="#top" class="map-link" style="margin-top: 15px;">Վերադառնալ սկզբին ↑</a>
+  </div>
+</footer>
+
+<script>
+const envelope = document.getElementById('envelope');
+const bgMusic = document.getElementById('bgMusic');
+
+function playAudio() {
+  if (bgMusic && bgMusic.paused) {
+    bgMusic.play().catch(err => console.log("Play action required:", err));
+  }
+}
+
+document.addEventListener('click', playAudio, { once: true });
+document.addEventListener('touchstart', playAudio, { once: true });
+
+function openEnvelope() {
+  if (!envelope.classList.contains('open')) {
+    envelope.classList.add('open');
+    document.getElementById('invitation').scrollIntoView({ behavior: 'smooth', block: 'start' });
+    document.getElementById('tapText').textContent = 'Հրավիրատոմսը բացված է';
+    playAudio();
+  }
+}
+
+envelope.addEventListener('click', openEnvelope);
+envelope.addEventListener('keydown', e => {
+  if (e.key === 'Enter' || e.key === ' ') {
+    e.preventDefault();
+    openEnvelope();
+  }
+});
+
+// Հետհաշվարկի (Countdown) տրամաբանություն
+const weddingDate = new Date("October 31, 2026 11:00:00").getTime();
+
+function updateCountdown() {
+  const now = new Date().getTime();
+  const diff = weddingDate - now;
+
+  if (diff > 0) {
+    const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+    const hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+    const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+    const seconds = Math.floor((diff % (1000 * 60)) / 1000);
+
+    document.getElementById('cdDays').textContent = days < 10 ? '0' + days : days;
+    document.getElementById('cdHours').textContent = hours < 10 ? '0' + hours : hours;
+    document.getElementById('cdMins').textContent = minutes < 10 ? '0' + minutes : minutes;
+    document.getElementById('cdSecs').textContent = seconds < 10 ? '0' + seconds : seconds;
+  } else {
+    document.getElementById('cdDays').textContent = "00";
+    document.getElementById('cdHours').textContent = "00";
+    document.getElementById('cdMins').textContent = "00";
+    document.getElementById('cdSecs').textContent = "00";
+  }
+}
+
+setInterval(updateCountdown, 1000);
+updateCountdown();
+</script>
+</body>
+</html>
